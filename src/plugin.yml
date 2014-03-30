@@ -1,0 +1,22 @@
+name: Kraftzone_youtube
+version: 0.99
+main: me.Koolio.Youtube.Youtube
+description: Youtube url display
+
+commands:
+    yt:
+        description: Youtube url display
+        usage: |
+           /<command> <url>
+    ytm:
+        description: msg Youtube url to someone
+        usage: |
+           /<command> <playername> <url>
+permissions:
+    kraftzone.youtube.msg:
+        description: Send Youtube url display.
+        default: op
+        
+    kraftzone.youtube.announce:
+        description: Announce Youtube url display.
+        default: op
