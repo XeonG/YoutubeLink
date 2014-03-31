@@ -49,11 +49,10 @@ public class Youtube extends JavaPlugin {
 			if(args.length == 1 && linkifyYouTubeURLs(args[0])){
 				if(getYoutubeInfo(vidID)){
 				for(Player p : Bukkit.getServer().getOnlinePlayers()){
-					p.sendMessage(ChatColor.DARK_GRAY+"-------------------------------------------------");
 					p.sendMessage(ChatColor.WHITE+"-"+ChatColor.DARK_GRAY+"[Sent by] "+ChatColor.LIGHT_PURPLE+sender.getName().toString()+ChatColor.DARK_GRAY+" ---------------");
 					p.sendMessage(ChatColor.WHITE+"-"+ChatColor.DARK_GRAY+"[Title] "+ChatColor.GREEN+Title);
 					p.sendMessage(ChatColor.WHITE+"-"+ChatColor.DARK_GRAY+"[URL] "+ChatColor.GREEN+"http://youtu.be/"+vidID);
-					p.sendMessage(ChatColor.DARK_GRAY+"----------------------------------------------------");
+					//p.sendMessage(ChatColor.DARK_GRAY+"----------------------------------------------------");
 					}
 					return true;
 
@@ -62,7 +61,7 @@ public class Youtube extends JavaPlugin {
 						return true;
 					}
 				}else{
-					sender.sendMessage(ChatColor.RED+"No valid youtube id could be found in this: "+args[1]);
+					sender.sendMessage(ChatColor.RED+"No valid youtube id could be found in this: "+args[0]);
 					sender.sendMessage(ChatColor.GOLD+"put in a url like: http://www.youtube.com/watch?v=P4vN366_94Y&hd=1");
 					return true;
 				}
@@ -84,14 +83,23 @@ public class Youtube extends JavaPlugin {
 					sender.sendMessage(ChatColor.RED+"Invalid playername "+args[0]+ " /ytm <playername> <youtube url>");
 					return true;
 				}
+				if(args.length == 1 && target != null){
+					sender.sendMessage(ChatColor.RED+"No youtube url included: /ytm <playername> <youtube url>");
+					return true;
+				}
+				if(args.length == 2 && target == null){
+					sender.sendMessage(ChatColor.RED+"Invalid playername "+args[0]+ " /ytm <playername> <youtube url>");
+					return true;
+				}
 				
 				if(args.length == 2 && target != null && linkifyYouTubeURLs(args[1])){
 					if(getYoutubeInfo(vidID)){
-					target.sendMessage(ChatColor.DARK_GRAY+"-------------------------------------------------");
 					target.sendMessage(ChatColor.WHITE+"-"+ChatColor.DARK_GRAY+"[Sent to you by] "+ChatColor.LIGHT_PURPLE+sender.getName().toString()+ChatColor.DARK_GRAY+" ---------------");
 					target.sendMessage(ChatColor.WHITE+"-"+ChatColor.DARK_GRAY+"[Title] "+ChatColor.GREEN+Title);
 					target.sendMessage(ChatColor.WHITE+"-"+ChatColor.DARK_GRAY+"[URL] "+ChatColor.GREEN+"http://youtu.be/"+vidID);
-					target.sendMessage(ChatColor.DARK_GRAY+"----------------------------------------------------");
+					//target.sendMessage(ChatColor.DARK_GRAY+"----------------------------------------------------");
+					sender.sendMessage(ChatColor.GREEN+"Video: "+Title);
+					sender.sendMessage(ChatColor.GREEN+"And link: http://youtu.be/"+vidID+ " ...sent to "+target.getName().toString());
 					return true;
 					}else{
 						sender.sendMessage(ChatColor.RED+"Video title could not be retreived for: http://youtu.be/"+vidID);
@@ -107,7 +115,7 @@ public class Youtube extends JavaPlugin {
 				return true;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public boolean linkifyYouTubeURLs(String url) {
